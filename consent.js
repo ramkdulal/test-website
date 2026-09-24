@@ -21,7 +21,7 @@
   // Configuration - update these two values for your site
   // ---------------------------------------------------------------------
   var GTM_CONTAINER_ID = 'GTM-5FK2DJ7F'; // replace with your GTM container ID
-  var CONSENT_VERSION = '3.1';
+  var CONSENT_VERSION = '3.2';
   var STORAGE_KEY = 'cookie_consent';
 
   // Cookie name patterns swept when a category is denied or withdrawn.
