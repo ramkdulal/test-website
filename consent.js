@@ -20,7 +20,7 @@
   // ---------------------------------------------------------------------
   // Configuration - update these two values for your site
   // ---------------------------------------------------------------------
-  var GTM_CONTAINER_ID = 'GTM-XXXXXXX'; // replace with your GTM container ID
+  var GTM_CONTAINER_ID = 'GTM-5FK2DJ7F'; // replace with your GTM container ID
   var CONSENT_VERSION = '2.0';
   var STORAGE_KEY = 'cookie_consent';
 
