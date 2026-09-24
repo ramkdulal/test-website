@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consent management example</title>
+
+  <link rel="stylesheet" href="consent.css">
+
+  <!--
+    consent.js must load here, in <head>, without defer or async,
+    and before any other script that might set a cookie. It pushes
+    the "denied by default" Consent Mode signal the moment it runs,
+    then decides whether to show the banner or load GTM.
+  -->
+  <script src="consent.js"></script>
+</head>
+<body>
+
+  <main>
+    <h1>Example page</h1>
+    <p>This page demonstrates the consent banner, the preferences modal and the floating cookie icon. Replace this content with your own site.</p>
+    <p><a href="#" id="cookie-settings-link">Cookie Settings</a></p>
+  </main>
+
+  <!-- ===================== Consent banner ===================== -->
+  <div
+    id="consent-banner"
+    class="consent-banner"
+    role="region"
+    aria-label="Cookie consent"
+    aria-describedby="consent-banner-desc"
+    hidden
+  >
+    <div class="consent-banner__content">
+      <button type="button" id="consent-banner-close" class="consent-banner__close" aria-label="Close and reject all optional cookies">&times;</button>
+      <h2 id="consent-banner-title">Privacy and cookie choices</h2>
+      <p id="consent-banner-desc">
+        We use essential technologies that are necessary for this website to work. With your permission, we also use analytics technologies to understand website usage and advertising technologies to measure and personalise advertising. Optional technologies are not activated unless you allow them. You can accept all, reject all, or manage your choices. You can change or withdraw your choices at any time through Cookie Settings. See our
+        <a href="/privacy-policy">Privacy Policy</a> and <a href="/cookie-policy">Cookie Policy</a>.
+      </p>
+      <div class="consent-banner__actions">
+        <button type="button" class="consent-btn" id="consent-reject-all">Reject All</button>
+        <button type="button" class="consent-btn" id="consent-manage">Manage Preferences</button>
+        <button type="button" class="consent-btn" id="consent-accept-all">Accept All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Preferences modal ===================== -->
+  <div id="consent-modal-overlay" class="consent-modal-overlay" hidden></div>
+  <div
+    id="consent-modal"
+    class="consent-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="consent-modal-title"
+    aria-describedby="consent-modal-desc"
+    hidden
+  >
+    <button type="button" id="consent-modal-close" class="consent-modal__close" aria-label="Close">&times;</button>
+
+    <h2 id="consent-modal-title">Manage your privacy choices</h2>
+    <p id="consent-modal-desc">
+      Choose which optional technologies you allow. Essential technologies are always active because they are necessary for the website to provide the service you requested. Your choices are stored so we can remember them. You can return to this panel at any time to change or withdraw consent.
+    </p>
+
+    <div class="consent-category">
+      <div class="consent-category__header">
+        <span class="consent-category__name">Essential</span>
+        <span class="consent-category__status">Always on</span>
+      </div>
+      <p class="consent-category__desc">
+        Required for core website operation, security, and features you explicitly request. These technologies do not require optional analytics or advertising consent.
+      </p>
+    </div>
+
+    <div class="consent-category">
+      <div class="consent-category__header">
+        <span class="consent-category__name">Analytics</span>
+        <label class="consent-toggle" for="consent-analytics-checkbox">
+          <input type="checkbox" id="consent-analytics-checkbox">
+          Allow
+        </label>
+      </div>
+      <p class="consent-category__desc">
+        Helps us understand how visitors use the website so we can measure performance and improve it. This may use Google Analytics and related measurement technologies.
+      </p>
+    </div>
+
+    <div class="consent-category">
+      <div class="consent-category__header">
+        <span class="consent-category__name">Advertising</span>
+        <label class="consent-toggle" for="consent-advertising-checkbox">
+          <input type="checkbox" id="consent-advertising-checkbox">
+          Allow
+        </label>
+      </div>
+      <p class="consent-category__desc">
+        Allows advertising, conversion measurement, remarketing, and related technologies where applicable.
+      </p>
+    </div>
+
+    <div class="consent-modal__actions">
+      <button type="button" class="consent-btn" id="consent-modal-reject-all">Reject All</button>
+      <button type="button" class="consent-btn" id="consent-save-preferences">Save Preferences</button>
+    </div>
+  </div>
+
+  <!-- ===================== Floating cookie icon ===================== -->
+  <button type="button" id="consent-floating-icon" class="consent-floating-icon" aria-label="Manage Cookies">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10c0-.34-.02-.67-.05-1a2.5 2.5 0 0 1-3.45-3.45A9.98 9.98 0 0 0 12 2z" stroke="#1a1a1a" stroke-width="1.5"/>
+      <circle cx="8.5" cy="10.5" r="1.2" fill="#1a1a1a"/>
+      <circle cx="12.5" cy="15" r="1.2" fill="#1a1a1a"/>
+      <circle cx="15.5" cy="9.5" r="1.2" fill="#1a1a1a"/>
+    </svg>
+    <span class="consent-floating-icon__tooltip">Manage Cookies</span>
+  </button>
+
+  <script>
+    // Optional: wire up a text link (e.g. in your footer) to the same modal.
+    document.getElementById('cookie-settings-link').addEventListener('click', function (e) {
+      e.preventDefault();
+      document.getElementById('consent-manage') // reuse existing open logic
+        ? document.getElementById('consent-floating-icon').click()
+        : null;
+    });
+  </script>
+
+</body>
+</html>
