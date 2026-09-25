@@ -161,24 +161,30 @@
   }
 
   function applyConsent(record, isInitialLoad) {
-    pushConsentUpdate(record);
+  pushConsentUpdate(record);
 
-    var anyGranted = record.analytics_storage === 'granted' || record.ad_storage === 'granted';
-    var wasAlreadyLoaded = gtmLoaded; // capture state before loadGTM() runs
+  var anyGranted = record.analytics_storage === 'granted' || record.ad_storage === 'granted';
+  var wasAlreadyLoaded = gtmLoaded; // capture state before loadGTM() runs
 
-    if (anyGranted) {
-      loadGTM();
-    }
-    if (!isInitialLoad && anyGranted && wasAlreadyLoaded) {
-      window.dataLayer.push({ event: 'consent_granted_pageview' });
-    }
-    if (record.analytics_storage !== 'granted') {
-      sweepCookies(ANALYTICS_COOKIE_PATTERNS);
-    }
-    if (record.ad_storage !== 'granted') {
-      sweepCookies(ADVERTISING_COOKIE_PATTERNS);
-    }
+  if (anyGranted) {
+    loadGTM();
   }
+
+  // Only force a manual hit when GTM was already running before this
+  // change. A fresh GTM load already produces a genuine page_view via
+  // its own Initialization trigger, so forcing a second one here would
+  // double count that same pageview.
+  if (!isInitialLoad && anyGranted && wasAlreadyLoaded) {
+    window.dataLayer.push({ event: 'consent_granted_pageview' });
+  }
+
+  if (record.analytics_storage !== 'granted') {
+    sweepCookies(ANALYTICS_COOKIE_PATTERNS);
+  }
+  if (record.ad_storage !== 'granted') {
+    sweepCookies(ADVERTISING_COOKIE_PATTERNS);
+  }
+}
 
   // ---------------------------------------------------------------------
   // UI wiring (runs once the DOM is ready)
