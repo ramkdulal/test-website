@@ -174,6 +174,9 @@
     if (record.ad_storage !== 'granted') {
       sweepCookies(ADVERTISING_COOKIE_PATTERNS);
     }
+    if (!isInitialLoad && anyGranted) {
+     window.dataLayer.push({ event: 'consent_granted_pageview' });
+   }
   }
 
   // ---------------------------------------------------------------------
