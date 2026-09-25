@@ -164,10 +164,14 @@
     pushConsentUpdate(record);
 
     var anyGranted = record.analytics_storage === 'granted' || record.ad_storage === 'granted';
+    var wasAlreadyLoaded = gtmLoaded; // capture state before loadGTM() runs
+
     if (anyGranted) {
       loadGTM();
     }
-
+  if (!isInitialLoad && anyGranted && wasAlreadyLoaded) {
+    window.dataLayer.push({ event: 'consent_granted_pageview' });
+  }
     if (record.analytics_storage !== 'granted') {
       sweepCookies(ANALYTICS_COOKIE_PATTERNS);
     }
