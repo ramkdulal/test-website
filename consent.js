@@ -169,18 +169,15 @@
     if (anyGranted) {
       loadGTM();
     }
-  if (!isInitialLoad && anyGranted && wasAlreadyLoaded) {
-    window.dataLayer.push({ event: 'consent_granted_pageview' });
-  }
+    if (!isInitialLoad && anyGranted && wasAlreadyLoaded) {
+      window.dataLayer.push({ event: 'consent_granted_pageview' });
+    }
     if (record.analytics_storage !== 'granted') {
       sweepCookies(ANALYTICS_COOKIE_PATTERNS);
     }
     if (record.ad_storage !== 'granted') {
       sweepCookies(ADVERTISING_COOKIE_PATTERNS);
     }
-    if (!isInitialLoad && anyGranted) {
-     window.dataLayer.push({ event: 'consent_granted_pageview' });
-   }
   }
 
   // ---------------------------------------------------------------------
