@@ -197,6 +197,7 @@
     var advertisingCheckbox = document.getElementById('consent-advertising-checkbox');
     var modalRejectAllBtn = document.getElementById('consent-modal-reject-all');
     var savePreferencesBtn = document.getElementById('consent-save-preferences');
+    var modalAcceptAllBtn = document.getElementById('consent-modal-accept-all');
 
     var floatingIcon = document.getElementById('consent-floating-icon');
 
@@ -300,6 +301,7 @@
     overlay.addEventListener('click', closeModal);
     modalRejectAllBtn.addEventListener('click', handleRejectAll);
     savePreferencesBtn.addEventListener('click', handleSavePreferences);
+    modalAcceptAllBtn.addEventListener('click', handleAcceptAll);
 
     floatingIcon.addEventListener('click', openModal);
 
